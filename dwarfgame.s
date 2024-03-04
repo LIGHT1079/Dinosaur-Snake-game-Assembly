@@ -1,0 +1,1725 @@
+	INCLUDE snakegame.s
+		
+	AREA	dwarf, CODE, READONLY
+		
+
+
+DRAW_SCORE_DWARF          ;draws the score word in game bottom left
+   push{r0-r12,lr}
+   LDR r10, =WHITE
+   LDR r0, =8
+   LDR r1, =12
+   LDR r3, =14
+   LDR r4, =14
+   bl DRAW_RECTANGLE_FILLED
+   LDR r0, =8
+   LDR r1, =12
+   LDR r3, =10
+   LDR r4, =16
+   bl DRAW_RECTANGLE_FILLED
+   LDR r0, =10
+   LDR r1, =16
+   LDR r3, =14
+   LDR r4, =18
+   bl DRAW_RECTANGLE_FILLED
+   LDR r0, =12
+   LDR r4, =22
+   bl DRAW_RECTANGLE_FILLED
+   LDR r0, =8
+   LDR r1, =20
+   LDR r3, =14
+   bl DRAW_RECTANGLE_FILLED
+   LDR r0, =16
+   LDR r3, =22
+   LDR r1, =12
+   LDR r4, =14
+   bl DRAW_RECTANGLE_FILLED
+   LDR r3, =18
+   LDR r4, =22
+   bl DRAW_RECTANGLE_FILLED
+   LDR r3, =22
+   LDR r1, =20
+   bl DRAW_RECTANGLE_FILLED
+   LDR r0, =24
+   LDR r3, =31
+   LDR r1, =12
+   LDR r4, =14
+   bl DRAW_RECTANGLE_FILLED
+   LDR r3, =26
+   LDR r4, =22
+   bl DRAW_RECTANGLE_FILLED
+   LDR r0, =34
+   LDR r3, =36
+   LDR r1, =14
+   LDR r4, =16
+   bl DRAW_RECTANGLE_FILLED
+   LDR r1, =20
+   LDR r4, =22
+   bl DRAW_RECTANGLE_FILLED
+   pop{r0-r12,pc}
+; R0= left bottom x of gesm el dwarf, R1= left bottom y of gesm el dwarf 	
+DRAW_DWARF
+    push{r0-r12,lr}
+	mov R5, R0
+	mov R6, R1
+	LDR R8,=DWARF_LOCATION
+	STRH R5,[R8]
+	ADD R8,R8,#2
+	STRH R6,[R8]
+	;Now R0 and R1 still the bottom left, so we draw with them
+	;DRAW LEFT SHOE
+	ADD R3,R0,#4
+	MOV R4,R1
+	SUB R1,R4,#3
+	LDR R10,=BLACK
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW RIGHT SHOE
+	ADD R0,R0,#6
+	ADD R3,R0,#4
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW LEFT LEG
+	MOV R0,R5
+	ADD R3,R0,#1
+	MOV R4,R6
+	SUB R1,R4,#12
+	LDR R10,=BLUE
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW RIGHT LEG
+	ADD R0,R0,#6
+	ADD R3,R0,#1
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW BODY
+	MOV R0,R5
+	ADD R3,R0,#10
+	MOV R4,R1
+	SUB R1,R1,#10
+	LDR R10,=RED
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW NECK 
+	ADD R0,R0,#4
+	SUB R3,R3,#4
+	MOV R4,R1
+	SUB R1,R1,#1
+	LDR R10, =SKIN  ;CHANGE TO SKIN COLOR
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW HEAD
+	SUB R0,R0,#1
+	ADD R3,R3,#1
+	;Now we got the width of the head
+	MOV R4,R1
+	SUB R1,R1,#4
+	BL DRAW_RECTANGLE_FILLED
+	
+	;DRAW EYES 
+	ADD R4,R1,#1
+	ADD R1,R1,#1
+	ADD R0,R0,#1
+	ADD R3,R0,#1
+	LDR R10, =WHITE  ;CHANGE TO WHITE
+	BL DRAW_RECTANGLE_FILLED
+	
+	ADD R0,R3,#2
+	ADD R3,R0,#1
+	BL  DRAW_RECTANGLE_FILLED
+	
+	pop{r0-r12,pc}
+REMOVE_DWARF
+    push{r0-r12,lr}
+	mov R5, R0
+	mov R6, R1
+	
+	;Now R0 and R1 still the bottom left, so we draw with them
+	;DRAW LEFT SHOE
+	ADD R3,R0,#4
+	MOV R4,R1
+	SUB R1,R4,#3
+	LDR R10,=CYAN
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW RIGHT SHOE
+	ADD R0,R0,#6
+	ADD R3,R0,#4
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW LEFT LEG
+	MOV R0,R5
+	ADD R3,R0,#1
+	MOV R4,R6
+	SUB R1,R4,#12
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW RIGHT LEG
+	ADD R0,R0,#6
+	ADD R3,R0,#1
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW BODY
+	MOV R0,R5
+	ADD R3,R0,#10
+	MOV R4,R1
+	SUB R1,R1,#10
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW NECK 
+	ADD R0,R0,#4
+	SUB R3,R3,#4
+	MOV R4,R1
+	SUB R1,R1,#1
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW HEAD
+	SUB R0,R0,#1
+	ADD R3,R3,#1
+	;Now we got the width of the head
+	MOV R4,R1
+	SUB R1,R1,#4
+	BL DRAW_RECTANGLE_FILLED
+	
+	;DRAW EYES 
+	ADD R4,R1,#1
+	ADD R1,R1,#1
+	ADD R0,R0,#1
+	ADD R3,R0,#1
+	BL DRAW_RECTANGLE_FILLED
+	
+	ADD R0,R3,#2
+	ADD R3,R0,#1
+	BL  DRAW_RECTANGLE_FILLED
+	
+	pop{r0-r12,pc}
+JUMP_DWARF
+	PUSH{R0-R12,LR}
+	LDR R7,=40
+	LDR R5,=DWARF_LOCATION
+	LDR R0,=23
+	ADD R5,R5,#2
+	LDRH R1,[R5]
+FIVE_JUMPS
+	BL REMOVE_DWARF
+	SUB R1,R1,#1
+	BL DRAW_DWARF
+	BL delay_50_milli_second	
+	SUB R7,R7,#1
+	CMP R7,#0
+	BHI FIVE_JUMPS
+	BL REMOVE_DWARF
+	STRH R1,[R5]
+	POP {R0-R12,PC}
+FALL_DWARF
+	PUSH {R0-R12,LR}
+	LDR R5,=DWARF_LOCATION
+	LDR R0,=23
+	ADD R5,R5,#2
+	LDRH R1,[R5]
+	LDR R7,=40
+FIVE_FALLS
+	BL REMOVE_DWARF
+	ADD R1,R1,#1
+	BL DRAW_DWARF
+	BL delay_50_milli_second
+	SUB R7,R7,#1
+	CMP R7,#0
+	BHI FIVE_FALLS
+	STRH R1,[R5]
+
+	POP {R0-R12,PC}
+
+	BL SKIP_THIS_LINE102
+	LTORG
+SKIP_THIS_LINE102
+
+MOVE_DWARF
+    push{r0-r12,lr}
+	LDR R5,=DWARF_LOCATION
+	LDRH r0,[R5]
+	ADD R5,R5,#2
+	LDRH r1,[R5]
+	mov R8, R0
+	mov R9, R1
+	;REMOVE LEFT LEG
+	BL SKIP_THIS_LINE1023
+	LTORG
+SKIP_THIS_LINE1023
+	;DRAW LEFT SHOE
+	ADD R3,R0,#4
+	MOV R4,R1
+	SUB R1,R4,#3
+	LDR R10,=CYAN
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW RIGHT SHOE
+	ADD R0,R0,#6
+	ADD R3,R0,#4
+	;DRAW LEFT LEG
+	MOV R0,R5
+	ADD R3,R0,#1
+	MOV R4,R6
+	SUB R1,R4,#12
+	BL DRAW_RECTANGLE_FILLED
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	
+	;REMOVE RIGHT LEG
+	mov r0,r8
+	MOV r1,r9
+	mov R5, R0
+	mov R6, R1
+	
+	;DRAW LEFT SHOE
+	ADD R3,R0,#4
+	MOV R4,R1
+	SUB R1,R4,#3
+	LDR R10,=CYAN
+	;DRAW RIGHT SHOE
+	ADD R0,R0,#6
+	ADD R3,R0,#4
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW LEFT LEG
+	MOV R0,R5
+	ADD R3,R0,#1
+	MOV R4,R6
+	SUB R1,R4,#12
+	;DRAW RIGHT LEG
+	ADD R0,R0,#6
+	ADD R3,R0,#1
+	BL DRAW_RECTANGLE_FILLED
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;DRAW NEW LEFT LEG
+	MOV r0,R8
+	MOV r1,R9
+	mov R5, R0
+	mov R6, R1
+	
+	;DRAW LEFT SHOE
+	ADD R3,R0,#4
+	MOV R4,R1
+	SUB R1,R4,#3
+	LDR R10,=BLACK
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW LEFT LEG
+	MOV R0,R5
+	ADD R3,R0,#1
+	MOV R4,R6
+	SUB R1,R4,#10
+	LDR R10,=BLUE
+	BL DRAW_RECTANGLE_FILLED
+	SUB R0,R0,#1
+	SUB R3,R3,#1
+	SUB R1,R4,#5
+	BL DRAW_RECTANGLE_FILLED
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;DRAW NEW RIGHT LEG
+	MOV r0,R8
+	MOV r1,R9
+	mov R5, R0
+	mov R6, R1
+	
+	;DRAW LEFT SHOE
+	ADD R3,R0,#4
+	MOV R4,R1
+	SUB R1,R4,#3
+	LDR R10,=BLACK
+	;DRAW RIGHT SHOE
+	ADD R0,R0,#6
+	ADD R3,R0,#4
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW LEFT LEG
+	MOV R0,R5
+	ADD R3,R0,#1
+	MOV R4,R6
+	SUB R1,R4,#10
+	LDR R10,=BLUE
+
+	;DRAW RIGHT LEG
+	ADD R0,R0,#6
+	ADD R3,R0,#1
+	BL DRAW_RECTANGLE_FILLED
+	SUB R0,R0,#1
+	SUB R3,R3,#1
+	SUB R1,R4,#5
+	BL DRAW_RECTANGLE_FILLED
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;REMOVE NEW LEFT LEG
+	MOV r0,R8
+	MOV r1,R9
+	mov R5, R0
+	mov R6, R1
+	
+	;DRAW LEFT SHOE
+	ADD R3,R0,#4
+	MOV R4,R1
+	SUB R1,R4,#3
+	LDR R10,=CYAN
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW LEFT LEG
+	MOV R0,R5
+	ADD R3,R0,#1
+	MOV R4,R6
+	SUB R1,R4,#10
+	BL DRAW_RECTANGLE_FILLED
+	SUB R0,R0,#1
+	SUB R3,R3,#1
+	SUB R1,R4,#5
+	BL DRAW_RECTANGLE_FILLED
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;REMOVE NEW RIGHT LEG
+	MOV r0,R8
+	MOV r1,R9
+	mov R5, R0
+	mov R6, R1
+	
+	;DRAW LEFT SHOE
+	ADD R3,R0,#4
+	MOV R4,R1
+	SUB R1,R4,#3
+	LDR R10,=CYAN
+	;DRAW RIGHT SHOE
+	ADD R0,R0,#6
+	ADD R3,R0,#4
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW LEFT LEG
+	MOV R0,R5
+	ADD R3,R0,#1
+	MOV R4,R6
+	SUB R1,R4,#10
+
+	;DRAW RIGHT LEG
+	ADD R0,R0,#6
+	ADD R3,R0,#1
+	BL DRAW_RECTANGLE_FILLED
+	SUB R0,R0,#1
+	SUB R3,R3,#1
+	SUB R1,R4,#5
+	BL DRAW_RECTANGLE_FILLED
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;DRAW OLD LEFT LEG
+	MOV r0,R8
+	MOV r1,R9
+	mov R5, R0
+	mov R6, R1
+
+	;DRAW LEFT SHOE
+	ADD R3,R0,#4
+	MOV R4,R1
+	SUB R1,R4,#3
+	LDR R10,=BLACK
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW RIGHT SHOE
+	ADD R0,R0,#6
+	ADD R3,R0,#4
+	;DRAW LEFT LEG
+	MOV R0,R5
+	ADD R3,R0,#1
+	MOV R4,R6
+	SUB R1,R4,#12
+	LDR R10,=BLUE
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW RIGHT LEG
+	ADD R0,R0,#6
+	ADD R3,R0,#1
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;DRAW OLD RIGHT LEG
+	MOV r0,R8
+	MOV r1,R9
+	mov R5, R0
+	mov R6, R1
+	
+	;DRAW LEFT SHOE
+	ADD R3,R0,#4
+	MOV R4,R1
+	SUB R1,R4,#3
+	LDR R10,=BLACK
+	;DRAW RIGHT SHOE
+	ADD R0,R0,#6
+	ADD R3,R0,#4
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW LEFT LEG
+	MOV R0,R5
+	ADD R3,R0,#1
+	MOV R4,R6
+	SUB R1,R4,#12
+	;DRAW RIGHT LEG
+	ADD R0,R0,#6
+	ADD R3,R0,#1
+	LDR R10,=BLUE
+	BL DRAW_RECTANGLE_FILLED
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+
+	pop{r0-r12,pc}
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;NIGHT MODE
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+REMOVE_DWARF_NIGHT
+    push{r0-r12,lr}
+	mov R5, R0
+	mov R6, R1
+	
+	;Now R0 and R1 still the bottom left, so we draw with them
+	;DRAW LEFT SHOE
+	ADD R3,R0,#4
+	MOV R4,R1
+	SUB R1,R4,#3
+	LDR R10,=BLACK
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW RIGHT SHOE
+	ADD R0,R0,#6
+	ADD R3,R0,#4
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW LEFT LEG
+	MOV R0,R5
+	ADD R3,R0,#1
+	MOV R4,R6
+	SUB R1,R4,#12
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW RIGHT LEG
+	ADD R0,R0,#6
+	ADD R3,R0,#1
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW BODY
+	MOV R0,R5
+	ADD R3,R0,#10
+	MOV R4,R1
+	SUB R1,R1,#10
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW NECK 
+	ADD R0,R0,#4
+	SUB R3,R3,#4
+	MOV R4,R1
+	SUB R1,R1,#1
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW HEAD
+	SUB R0,R0,#1
+	ADD R3,R3,#1
+	;Now we got the width of the head
+	MOV R4,R1
+	SUB R1,R1,#4
+	BL DRAW_RECTANGLE_FILLED
+	
+	;DRAW EYES 
+	ADD R4,R1,#1
+	ADD R1,R1,#1
+	ADD R0,R0,#1
+	ADD R3,R0,#1
+	BL DRAW_RECTANGLE_FILLED
+	
+	ADD R0,R3,#2
+	ADD R3,R0,#1
+	BL  DRAW_RECTANGLE_FILLED
+	
+	pop{r0-r12,pc}
+JUMP_DWARF_NIGHT
+	PUSH{R0-R12,LR}
+	LDR R7,=40
+	LDR R5,=DWARF_LOCATION
+	ADD R5,R5,#2
+	LDRH R1,[R5]
+FIVE_JUMPS_NIGHT
+	BL REMOVE_DWARF_NIGHT
+	SUB R1,R1,#4
+	BL DRAW_DWARF
+	BL UPDATE_BULLETS
+	SUB R7,R7,#4
+	CMP R7,#0
+	BHI FIVE_JUMPS_NIGHT
+	BL REMOVE_DWARF_NIGHT
+	STRH R1,[R5]
+	POP {R0-R12,PC}
+FALL_DWARF_NIGHT
+	PUSH {R0-R12,LR}
+	LDR R5,=DWARF_LOCATION
+	ADD R5,R5,#2
+	LDRH R1,[R5]
+	LDR R7,=40
+FIVE_FALLS_NIGHT
+	BL REMOVE_DWARF_NIGHT
+	ADD R1,R1,#4
+	BL DRAW_DWARF
+	BL UPDATE_BULLETS
+	SUB R7,R7,#4
+	CMP R7,#0
+	BHI FIVE_FALLS_NIGHT
+	STRH R1,[R5]
+
+	POP {R0-R12,PC}
+
+	BL SKIP_THIS_LINE102N
+	LTORG
+SKIP_THIS_LINE102N
+
+MOVE_DWARF_NIGHT
+    push{r0-r12,lr}
+	LDR R5,=DWARF_LOCATION
+	LDRH r0,[R5]
+	ADD R5,R5,#2
+	LDRH r1,[R5]
+	mov R8, R0
+	mov R9, R1
+	;REMOVE LEFT LEG
+	BL SKIP_THIS_LINE1023N
+	LTORG
+SKIP_THIS_LINE1023N
+	;DRAW LEFT SHOE
+	ADD R3,R0,#4
+	MOV R4,R1
+	SUB R1,R4,#3
+	LDR R10,=BLACK
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW RIGHT SHOE
+	ADD R0,R0,#6
+	ADD R3,R0,#4
+	;DRAW LEFT LEG
+	MOV R0,R5
+	ADD R3,R0,#1
+	MOV R4,R6
+	SUB R1,R4,#12
+	BL DRAW_RECTANGLE_FILLED
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	
+	;REMOVE RIGHT LEG
+	mov r0,r8
+	MOV r1,r9
+	mov R5, R0
+	mov R6, R1
+	
+	;DRAW LEFT SHOE
+	ADD R3,R0,#4
+	MOV R4,R1
+	SUB R1,R4,#3
+	LDR R10,=BLACK
+	;DRAW RIGHT SHOE
+	ADD R0,R0,#6
+	ADD R3,R0,#4
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW LEFT LEG
+	MOV R0,R5
+	ADD R3,R0,#1
+	MOV R4,R6
+	SUB R1,R4,#12
+	;DRAW RIGHT LEG
+	ADD R0,R0,#6
+	ADD R3,R0,#1
+	BL DRAW_RECTANGLE_FILLED
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;DRAW NEW LEFT LEG
+	MOV r0,R8
+	MOV r1,R9
+	mov R5, R0
+	mov R6, R1
+	
+	;DRAW LEFT SHOE
+	ADD R3,R0,#4
+	MOV R4,R1
+	SUB R1,R4,#3
+	LDR R10,=YELLOW
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW LEFT LEG
+	MOV R0,R5
+	ADD R3,R0,#1
+	MOV R4,R6
+	SUB R1,R4,#10
+	LDR R10,=BLUE
+	BL DRAW_RECTANGLE_FILLED
+	SUB R0,R0,#1
+	SUB R3,R3,#1
+	SUB R1,R4,#5
+	BL DRAW_RECTANGLE_FILLED
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;DRAW NEW RIGHT LEG
+	MOV r0,R8
+	MOV r1,R9
+	mov R5, R0
+	mov R6, R1
+	
+	;DRAW LEFT SHOE
+	ADD R3,R0,#4
+	MOV R4,R1
+	SUB R1,R4,#3
+	LDR R10,=YELLOW
+	;DRAW RIGHT SHOE
+	ADD R0,R0,#6
+	ADD R3,R0,#4
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW LEFT LEG
+	MOV R0,R5
+	ADD R3,R0,#1
+	MOV R4,R6
+	SUB R1,R4,#10
+	LDR R10,=BLUE
+
+	;DRAW RIGHT LEG
+	ADD R0,R0,#6
+	ADD R3,R0,#1
+	BL DRAW_RECTANGLE_FILLED
+	SUB R0,R0,#1
+	SUB R3,R3,#1
+	SUB R1,R4,#5
+	BL DRAW_RECTANGLE_FILLED
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;REMOVE NEW LEFT LEG
+	MOV r0,R8
+	MOV r1,R9
+	mov R5, R0
+	mov R6, R1
+	
+	;DRAW LEFT SHOE
+	ADD R3,R0,#4
+	MOV R4,R1
+	SUB R1,R4,#3
+	LDR R10,=BLACK
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW LEFT LEG
+	MOV R0,R5
+	ADD R3,R0,#1
+	MOV R4,R6
+	SUB R1,R4,#10
+	BL DRAW_RECTANGLE_FILLED
+	SUB R0,R0,#1
+	SUB R3,R3,#1
+	SUB R1,R4,#5
+	BL DRAW_RECTANGLE_FILLED
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;REMOVE NEW RIGHT LEG
+	MOV r0,R8
+	MOV r1,R9
+	mov R5, R0
+	mov R6, R1
+	
+	;DRAW LEFT SHOE
+	ADD R3,R0,#4
+	MOV R4,R1
+	SUB R1,R4,#3
+	LDR R10,=BLACK
+	;DRAW RIGHT SHOE
+	ADD R0,R0,#6
+	ADD R3,R0,#4
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW LEFT LEG
+	MOV R0,R5
+	ADD R3,R0,#1
+	MOV R4,R6
+	SUB R1,R4,#10
+
+	;DRAW RIGHT LEG
+	ADD R0,R0,#6
+	ADD R3,R0,#1
+	BL DRAW_RECTANGLE_FILLED
+	SUB R0,R0,#1
+	SUB R3,R3,#1
+	SUB R1,R4,#5
+	BL DRAW_RECTANGLE_FILLED
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;DRAW OLD LEFT LEG
+	MOV r0,R8
+	MOV r1,R9
+	mov R5, R0
+	mov R6, R1
+
+	;DRAW LEFT SHOE
+	ADD R3,R0,#4
+	MOV R4,R1
+	SUB R1,R4,#3
+	LDR R10,=YELLOW
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW RIGHT SHOE
+	ADD R0,R0,#6
+	ADD R3,R0,#4
+	;DRAW LEFT LEG
+	MOV R0,R5
+	ADD R3,R0,#1
+	MOV R4,R6
+	SUB R1,R4,#12
+	LDR R10,=BLUE
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW RIGHT LEG
+	ADD R0,R0,#6
+	ADD R3,R0,#1
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	;DRAW OLD RIGHT LEG
+	MOV r0,R8
+	MOV r1,R9
+	mov R5, R0
+	mov R6, R1
+	
+	;DRAW LEFT SHOE
+	ADD R3,R0,#4
+	MOV R4,R1
+	SUB R1,R4,#3
+	LDR R10,=YELLOW
+	;DRAW RIGHT SHOE
+	ADD R0,R0,#6
+	ADD R3,R0,#4
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW LEFT LEG
+	MOV R0,R5
+	ADD R3,R0,#1
+	MOV R4,R6
+	SUB R1,R4,#12
+	;DRAW RIGHT LEG
+	ADD R0,R0,#6
+	ADD R3,R0,#1
+	LDR R10,=BLUE
+	BL DRAW_RECTANGLE_FILLED
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+
+	pop{r0-r12,pc}
+
+	BL SKIP_THIS_LINE1023N1
+	LTORG
+SKIP_THIS_LINE1023N1
+UPDATE_BULLETS
+	PUSH{R0-R12,LR}
+	LDR R4,=BULLET_LOCATIONS
+	ldr r7,=BULLET_Y_LOCATIONS
+	LDR R9,=DWARF_LOCATION
+	LDR R11,=13
+	ADD R9,R9,#2
+	LDRH R5,[R9]
+	SUB R12,R5,#30
+	LDR R8,=0
+	BL SKIP_THIS_LINE1023N12
+	LTORG
+SKIP_THIS_LINE1023N12
+DRAW_B_NIGHT
+	LDRH R0,[R4]
+	LDRH R1,[R7]
+	LDR R10, =YELLOW
+	BL DRAW_BULLET
+	ADD R4,R4,#2
+	ADD R7,R7,#2
+	ADD R8,R8,#2
+	CMP R0,R11
+	BHI DRAW_SNAKE_GAME_OVER1
+BGAMEOVER
+	CMP R8,#8
+	BNE DRAW_B_NIGHT
+	SUB R4,R4,#8
+	SUB R7,R7,#8
+	SUB R8,R8,#8
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+DRAW_BU_NIGHT
+	LDRH R0,[R4]
+	LDRH R1,[R7]
+	LDR R10, =BLACK
+	BL DRAW_BULLET
+	ADD R4,R4,#2
+	ADD R7,R7,#2
+	ADD R8,R8,#2
+	CMP R8,#8
+	BNE DRAW_BU_NIGHT
+	SUB R4,R4,#8
+	SUB R7,R7,#8
+	SUB R8,R8,#8
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+MOVE_BU_NIGHT
+	BL MOVE_BULLET
+	;BL MOVE_BULLET_Y
+	ADD R4,R4,#2
+	ADD R7,R7,#2
+	ADD R8,R8,#2
+	CMP R8,#8
+	BNE MOVE_BU_NIGHT
+
+	POP{R0-R12,PC}
+	
+DRAW_SNAKE_GAME_OVER1
+	ADD R11,R11,#5
+	CMP R11,R0
+	BHI DRAW_SNAKE_GAME_OVER1P1
+	BL BGAMEOVER
+DRAW_SNAKE_GAME_OVER1P1
+	CMP R5,R1
+	BHI DRAW_SNAKE_GAME_OVER1P2
+	BL BGAMEOVER
+DRAW_SNAKE_GAME_OVER1P2
+	
+	CMP R1,R12
+	BHI DRAW_SNAKE_GAME_OVERF
+	BL BGAMEOVER
+	
+UPDATE_BULLETS_DELAYED
+	PUSH{R0-R12,LR}
+	LDR R4,=BULLET_LOCATIONS
+	LDR R7,=BULLET_Y_LOCATIONS
+	LDR R9,=DWARF_LOCATION
+	BL IGNORED
+	LTORG
+IGNORED
+	LDR R8,=0
+DRAW_B_NIGHTD
+	LDR R11,=23
+	LDRH R0,[R4]
+	LDRH R1,[R7]
+	LDR R10, =YELLOW
+	BL DRAW_BULLET
+	ADD R4,R4,#2
+	ADD R7,R7,#2
+	ADD R8,R8,#2
+	CMP R0,R11
+	BHI DRAW_SNAKE_GAME_OVER2
+BGAMEO
+	CMP R8,#8
+	BNE DRAW_B_NIGHTD
+	SUB R4,R4,#8
+	SUB R7,R7,#8
+	SUB R8,R8,#8
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+DRAW_BU_NIGHTD
+	LDRH R0,[R4]
+	LDRH R1,[R7]
+	LDR R10, =BLACK
+	BL DRAW_BULLET
+	ADD R4,R4,#2
+	ADD R7,R7,#2
+	ADD R8,R8,#2
+	CMP R8,#8
+	BNE DRAW_BU_NIGHTD
+	SUB R4,R4,#8
+	SUB R7,R7,#8
+	SUB R8,R8,#8
+MOVE_BU_NIGHTD
+	BL MOVE_BULLET_DELAYED
+	;BL MOVE_BULLET_Y
+	ADD R4,R4,#2
+	ADD R7,R7,#2
+	ADD R8,R8,#2
+	CMP R8,#8
+	BNE MOVE_BU_NIGHTD
+
+	POP{R0-R12,PC}
+DRAW_SNAKE_GAME_OVER2
+	ADD R11,R11,#10
+	CMP R11,R0
+	BHI DRAW_SNAKE_GAME_OVERF
+	BL BGAMEO
+
+DRAW_SNAKE_GAME_OVERF
+	BL DRAW_SNAKE_GAME_OVER
+	B enddwarf
+	
+MOVE_BULLET
+	push{r0-r12,lr}
+	LDRH R2,[R4]
+	SUB R2,R2,#2
+	STRH R2,[R4]
+	pop{r0-r12,pc}
+MOVE_BULLET_DELAYED
+	push{r0-r12,lr}
+	LDRH R2,[R4]
+	SUB R2,R2,#4
+	CMP R2,#6
+	BLO INCRE
+	STRH R2,[R4]
+B_INCRE
+	pop{r0-r12,pc}
+INCRE
+	ADD R2,R2,#280
+	STRH R2,[R4]
+	BL B_INCRE
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;BACKGROUND
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+DRAW_BACKGROUND_DWARF_GAME
+    push{r0-r12,lr}
+	
+	; DRAW UPPER LEVEL 
+	ldr R0, =0 ;x1
+	ldr R1, =0 ;y1
+	ldr R3, =320 ;x2
+	ldr R4, =120 ;y2
+	LDR R10, =CYAN
+	BL DRAW_RECTANGLE_FILLED
+	;DRAW SOME CLOUDS
+	ldr r0, =80
+	ldr r3, =130
+	ldr r1, =40
+	ldr r4, =65
+	ldr r10, =WHITE
+	BL DRAW_RECTANGLE_FILLED
+	ldr r0, =110
+	ldr r3, =140
+	ldr r1, =25
+	ldr r4, =40
+	BL DRAW_RECTANGLE_FILLED
+	ldr r0, =70
+	ldr r3, =100
+	ldr r1, =65
+	ldr r4, =80
+	BL DRAW_RECTANGLE_FILLED
+	
+	
+	ldr r0, =180
+	ldr r3, =220
+	ldr r1, =40
+	ldr r4, =65
+	ldr r10, =WHITE
+	BL DRAW_RECTANGLE_FILLED
+	
+	ldr r0, =200
+	ldr r3, =220
+	ldr r1, =20
+	ldr r4, =40
+	BL DRAW_RECTANGLE_FILLED
+	ldr r0, =170
+	ldr r3, =180
+	ldr r1, =65
+	ldr r4, =70
+	BL DRAW_RECTANGLE_FILLED
+	
+	;DRAW LOWER LEVEL
+	ldr R0, =0 ;x1
+	ldr R1, =121 ;y1
+	ldr R3, =320 ;x2
+	ldr R4, =240 ;y2
+	LDR R10, =YELLOW
+	BL DRAW_RECTANGLE_FILLED
+	
+	ldr r3, =211
+	LDR R10, =CYAN ;change to brown
+	BL DRAW_RECTANGLE_FILLED
+	
+	ldr r3, =201
+	ldr r4, =210
+	LDR R10, =CYAN2 ;change to dark brown
+	
+	ldr r3, =196
+	ldr r4, =209
+	LDR R10, =GREEN 
+	BL DRAW_RECTANGLE_FILLED
+	
+	pop{r0-r12,pc}
+	   
+DRAW_OBSTACLES
+	;THIS FUNCTION TAKES THE X COORDINATE AND THE HEIGHT OF THE OBSTACLE
+	; R0 --> X_START
+	; R1 --> HEIGHT
+	push {r0-r12, LR}
+    ADD R3,R0,#10  ;R3 --> END X
+	MOV R4 ,#233
+	SUB R1,R4,R1  ; R1 --> START Y
+	BL DRAW_RECTANGLE_FILLED
+	POP {R0-R12, PC}
+	;BL DRAW_RECTANGLE_FILLED
+	;ldr R0, =70 ;x1
+	;ldr R1, =100 ;y1
+	;ldr R3, =73 ;x2
+	;ldr R4, =102 ;y2
+	;LDR R10, =BLUE
+	;BL DRAW_RECTANGLE_FILLED
+	;ldr R0, =73 ;x1
+	;ldr R1, =98 ;y1
+	;ldr R3, =76 ;x2
+	;ldr R4, =102 ;y2
+	;LDR R10, =BLUE
+DRAW_BULLET
+	;THIS FUNCTION TAKE START POINT BUTTOM LEFT AND HRIGHT
+	;R0 =X1,R1=Y1,R3=X2,R4=Y2
+	; R0 =X1 , HEIGHT=R4
+	PUSH {R0-R12 , LR}
+	MOV R4,R1
+	SUB R1,R1,#2
+	ADD R3,R0,#3
+	BL DRAW_RECTANGLE_FILLED
+	MOV R0,R3
+	ADD R3,R0,#3
+	SUB R1,R1,#2
+	BL DRAW_RECTANGLE_FILLED
+	POP {R0-R12, PC}
+	
+
+DRAW_BACKGROUND_DWARF
+    push{r0-r12,lr}
+	
+	ldr R0, =0 ;x1
+	ldr R1, =0 ;y1
+	ldr R3, =320 ;x2
+	ldr R4, =120 ;y2
+	LDR R10, =BLACK
+	BL DRAW_RECTANGLE_FILLED
+	BL DRAW_STARS
+	BL DRAW_STREET
+	
+	ldr R0, =0 ;x1
+	ldr R1, =121 ;y1
+	ldr R3, =320 ;x2
+	ldr R4, =240 ;y2
+	LDR R10, =CYAN
+	BL DRAW_RECTANGLE_FILLED
+	BL DRAW_CLOUDS
+	BL DRAW_DESERT
+
+	pop{r0-r12,pc}
+DRAW_STARS
+    push{r0-r12,lr}
+
+    ; Draw 5 stars at different positions
+
+    ; Star 1
+    ldr R0, =50
+    ldr R1, =5
+    ldr R10, =WHITE
+    bl DRAW_STAR
+
+    ; Star 2
+    ldr R0, =110
+    ldr R1, =20
+    bl DRAW_STAR
+
+    ; Star 3
+    ldr R0, =180
+    ldr R1, =10
+    bl DRAW_STAR
+
+    ; Star 4
+    ldr R0, =220
+    ldr R1, =5
+    bl DRAW_STAR
+
+    ; Star 5
+    ldr R0, =290
+    ldr R1, =20
+    bl DRAW_STAR
+	pop{r0-r12,pc}
+
+		
+DRAW_STAR
+    push{r0-r12,lr}
+
+    ; Parameters: R0=x, R1=y, R10=color
+
+	add r3,r0,#2
+	ADD r4,r1,#2
+	
+    bl DRAW_RECTANGLE_FILLED
+
+    ; Rest of the star
+	; Bottom right
+	add r0,r0, #2
+    add R3, R3, #2
+    add R1, R1, #2
+    add R4, R4, #2
+    bl DRAW_RECTANGLE_FILLED
+
+    ; Bottom LEFT
+	SUB r0,r0,#4
+    SUB R3, R3, #4
+    bl DRAW_RECTANGLE_FILLED
+
+    ; TOP LEFT
+	SUB r1,r1,#4
+    SUB R4, R4, #4
+    bl DRAW_RECTANGLE_FILLED
+
+    ; TOP RIGHT
+	ADD r0,r0,#4
+    add R3, R3, #4
+    bl DRAW_RECTANGLE_FILLED
+
+    pop{r0-r12,pc}
+DRAW_STREET
+    push{r0-r12,lr}
+
+    ; Draw the grey street
+    ldr R0, =10
+    ldr R1, =112
+    ldr R3, =320
+    ldr R4, =120
+    ldr R10, =GREY
+    bl DRAW_RECTANGLE_FILLED
+
+    ; Draw yellow pixels at the top
+    ldr R0, =60
+	ldr R4,=116
+	LDR R3,=80
+    ldr R10, =YELLOW
+    bl DRAW_RECTANGLE_FILLED
+
+    ldr R0, =120
+	LDR R3,=140
+    bl DRAW_RECTANGLE_FILLED
+
+    ldr R0, =180
+	LDR R3,=200
+    bl DRAW_RECTANGLE_FILLED
+
+    ldr R0, =240
+	LDR R3,=260
+    bl DRAW_RECTANGLE_FILLED
+
+	pop{r0-r12,pc}
+DRAW_CLOUDS
+    push{r0-r12,lr}
+    ; Draw 5 clouds at different positions
+
+    ; Cloud 1
+    ldr R0, =50
+    ldr R1, =135
+    ldr R10, =WHITE
+    bl DRAW_CLOUD
+
+    ; Cloud 2
+    ldr R0, =100
+    ldr R1, =155
+    bl DRAW_CLOUD
+
+    ; Cloud 3
+    ldr R0, =150
+    ldr R1, =140
+    bl DRAW_CLOUD
+
+    ; Cloud 4
+    ldr R0, =200
+    ldr R1, =155
+    bl DRAW_CLOUD
+
+    ; Cloud 5
+    ldr R0, =250
+    ldr R1, =145
+    bl DRAW_CLOUD
+
+	pop{r0-r12,pc}
+
+DRAW_CLOUD
+    push{r0-r12,lr}
+    ldr R10, =WHITE
+
+	add r3,r0,#8
+	mov r4,r1
+	sub r1,r1,#4
+	bl DRAW_RECTANGLE_FILLED
+    add r0,r0,#2
+	sub r4,r4,#2
+	sub r1,r1,#2
+	bl DRAW_RECTANGLE_FILLED
+	add r0,r0,#2
+	sub r4,r4,#2
+	sub r1,r1,#2
+	bl DRAW_RECTANGLE_FILLED
+    add r0,r0,#4
+	add r3,r3,#2
+	add r4,r4,#2
+	add r1,r1,#2
+	bl DRAW_RECTANGLE_FILLED
+	mov r0,r3
+	add r3,r3,#2
+	add r4,r4,#2
+	add r1,r1,#2
+	bl DRAW_RECTANGLE_FILLED
+	pop{r0-r12,pc}
+DRAW_DESERT
+    push{r0-r12,lr}
+
+    ; Draw the desert
+    ldr R0, =0
+    ldr R1, =234
+    ldr R3, =320
+    ldr R4, =240
+    ldr R10, =BEIGE
+    bl DRAW_RECTANGLE_FILLED
+
+    ; Draw grey pixels
+    ldr R0, =60
+	ldr R4,=62
+	ldr r1,=236
+	LDR R3,=238
+    ldr R10, =GREY
+    bl DRAW_RECTANGLE_FILLED
+
+    ldr R0, =120
+	ldr R4,=122
+	ldr r1,=234
+	LDR R3,=236
+    bl DRAW_RECTANGLE_FILLED
+
+    ldr R0, =180
+	ldr R4,=182
+	ldr r1,=238
+	LDR R3,=230
+    bl DRAW_RECTANGLE_FILLED
+
+    ldr R0, =240
+	ldr R4,=242
+	ldr r1,=236
+	LDR R3,=238
+    bl DRAW_RECTANGLE_FILLED
+
+	pop{r0-r12,pc}
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;MAHER
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+CHECK_Y
+	;TAKE INPUT Y OF OBSTACLES
+	;R1 LESS POINT OF DWARF
+	;R11 IS HEIGHT OF OBSTACLE
+	PUSH {R0-R12 , LR}
+	LDR R4,=DWARF_LOCATION;
+	ADD R4,R4,#2
+	LDR R1,[R4]
+	CMP R1,R11 ; REPLACE RD WITH Y OF DWARF
+	;BL DRAW_SNAKE_GAME_OVERF ;REPLACE GAMEOVER WITH LABEL GAMEOVER
+	POP {R0-R12, PC}
+
+MOVE_OBSTACLES
+	push {r0-r12, LR}
+	
+	LDR R6, =OBSTACLE_DIRECTION
+	
+	; REMOVE OBSTACLE
+	
+	LDR R0, [R6]
+	MOV R1,#0
+	LDR R10, =CYAN
+	BL DRAW_OBSTACLES
+	
+	; REMOVE OBSTACLE
+	ADD R6,R6,#2
+	LDR R0, [R6]
+	MOV R1,#15
+	LDR R10, =CYAN
+	BL DRAW_OBSTACLES
+	
+	; REMOVE OBSTACLE
+	ADD R6,R6,#2
+	LDR R0,[R6]
+	MOV R1,#30
+	LDR R10, =CYAN
+	BL DRAW_OBSTACLES
+	
+	
+	; REMOVE OBSTACLE
+	ADD R6,R6,#2
+	LDR R0,[R6]
+	MOV R1,#20
+	LDR R10, =CYAN
+	BL DRAW_OBSTACLES
+	
+	; UPDATE COORDINATES1
+	LDR R6, =OBSTACLE_DIRECTION
+	LDR R0,[R6]
+	SUB R0,R0,#10
+	STR R0,[R6]
+	
+	; DRAW BLACK
+	LDR R0, [R6]
+	MOV R1,#1
+	LDR R10, =BLACK
+	
+	
+	;check for dwarf position
+	LDR R8,=30
+	LDR R10,=40
+	;LDR R8,[R7] ;R8 IS X OF DWARF
+	LDR R12,=OBSTACLE_HEIGHT
+	LDR R11,[R12] ; R11 IS Y OF OBSTACLE
+	CMP R0,R8 ;REPLACE 25 BY X OF DWARF
+	BLO HERE
+	CMP R0,R10 ;REPLACE 25 BY X OF DWARF
+	BGT HERE
+	BL CHECK_Y
+	
+HERE	
+	ADD R6,R6,#2
+	
+	; UPDATE COORDINATES2
+	LDR R0,[R6]
+	SUB R0,R0,#10
+	STR R0,[R6]
+		
+	; DRAW BLACK
+	LDR R0, [R6]
+	MOV R1,#15
+	LDR R10, =BLACK
+	BL DRAW_OBSTACLES
+	
+	
+	;check for dwarf position
+	LDR R8,=30
+	LDR R10,=40
+	;LDR R8,[R7] ;R8 IS X OF DWARF
+	;ADD R7,R7,#2
+	;LDR R9,[R7] ; R9 IS Y OF DWARF
+	ADD R12,R12,#2
+	LDR R11,[R12] ; R11 IS Y OF OBSTACLE
+	CMP R0,R8 ;REPLACE 25 BY X OF DWARF
+	BLO hereone
+	CMP R0,R10 ;REPLACE 25 BY X OF DWARF
+	BGT hereone
+	BL CHECK_Y
+	
+hereone	
+	ADD R6,R6,#2
+	
+	; UPDATE COORDINATES3
+	LDR R0,[R6]
+	SUB R0,R0,#10
+	STR R0,[R6]
+	
+	
+	; DRAW BLACK
+	
+	LDR R0, [R6]
+	MOV R1,#30
+	LDR R10, =BLACK
+	BL DRAW_OBSTACLES
+	
+	
+	LDR R8,=30
+	LDR R10,=40
+	;LDR R8,[R7] ;R8 IS X OF DWARF
+	ADD R7,R7,#2
+	LDR R9,[R7] ; R9 IS Y OF DWARF
+	CMP R0,R8 ;REPLACE 25 BY X OF DWARF
+	BLO heretwo
+	CMP R0,R10 ;REPLACE 25 BY X OF DWARF
+	BGT heretwo
+	BL CHECK_Y
+	
+heretwo	
+
+
+
+
+
+	ADD R6,R6,#2
+	
+	; UPDATE COORDINATES3
+	LDR R0,[R6]
+	SUB R0,R0,#10
+	STR R0,[R6]
+	
+	
+	; DRAW BLACK
+	
+	LDR R0, [R6]
+	MOV R1,#20
+	LDR R10, =BLACK
+	BL DRAW_OBSTACLES
+	
+	
+	LDR R8,=30
+	LDR R10,=40
+	;LDR R8,[R7] ;R8 IS X OF DWARF
+	;ADD R7,R7,#2
+	;LDR R9,[R7] ; R9 IS Y OF DWARF
+	ADD R12,R12,#2
+	LDR R11,[R12] ; R11 IS Y OF OBSTACLE
+	CMP R0,R8 ;REPLACE 25 BY X OF DWARF
+	BLO herethree
+	CMP R0,R10 ;REPLACE 25 BY X OF DWARF
+	BGT herethree
+	BL CHECK_Y
+	
+herethree
+		
+	POP {R0-R12, PC}
+	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+MOVE_OBSTACLES_DELAYED
+	push {r0-r12, LR}
+	LDR R6, =OBSTACLE_DIRECTION
+	
+	; REMOVE OBSTACLE
+	
+	LDR R0, [R6]
+	MOV R1,#0
+	LDR R10, =CYAN
+	BL DRAW_OBSTACLES
+	
+	; REMOVE OBSTACLE
+	ADD R6,R6,#2
+	LDR R0, [R6]
+	MOV R1,#15
+	LDR R10, =CYAN
+	BL DRAW_OBSTACLES
+	
+	; REMOVE OBSTACLE
+	ADD R6,R6,#2
+	LDR R0,[R6]
+	MOV R1,#30
+	LDR R10, =CYAN
+	BL DRAW_OBSTACLES
+	
+	
+	; REMOVE OBSTACLE
+	ADD R6,R6,#2
+	LDR R0,[R6]
+	MOV R1,#20
+	LDR R10, =CYAN
+	BL DRAW_OBSTACLES
+	
+	; UPDATE COORDINATES1
+	LDR R6, =OBSTACLE_DIRECTION
+	LDR R0,[R6]
+	SUB R0,R0,#10
+	STR R0,[R6]
+	
+	; DRAW BLACK
+	LDR R0, [R6]
+	MOV R1,#1
+	LDR R10, =BLACK
+	
+	
+	;check for dwarf position
+	LDR R8,=30
+	LDR R10,=40
+	;LDR R8,[R7] ;R8 IS X OF DWARF
+	LDR R12,=OBSTACLE_HEIGHT
+	LDR R11,[R12] ; R11 IS Y OF OBSTACLE
+	CMP R0,R8 ;REPLACE 25 BY X OF DWARF
+	BLO HERED
+	CMP R0,R10 ;REPLACE 25 BY X OF DWARF
+	BGT HERED
+	BL CHECK_Y
+	
+HERED	
+	ADD R6,R6,#2
+	
+	; UPDATE COORDINATES2
+	LDR R0,[R6]
+	SUB R0,R0,#10
+	STR R0,[R6]
+		
+	; DRAW BLACK
+	LDR R0, [R6]
+	MOV R1,#15
+	LDR R10, =BLACK
+	BL DRAW_OBSTACLES
+	
+	
+	;check for dwarf position
+	LDR R8,=30
+	LDR R10,=40
+	;LDR R8,[R7] ;R8 IS X OF DWARF
+	;ADD R7,R7,#2
+	;LDR R9,[R7] ; R9 IS Y OF DWARF
+	ADD R12,R12,#2
+	LDR R11,[R12] ; R11 IS Y OF OBSTACLE
+	CMP R0,R8 ;REPLACE 25 BY X OF DWARF
+	BLO hereoneD
+	CMP R0,R10 ;REPLACE 25 BY X OF DWARF
+	BGT hereoneD
+	BL CHECK_Y
+	
+hereoneD	
+	ADD R6,R6,#2
+	
+	; UPDATE COORDINATES3
+	LDR R0,[R6]
+	SUB R0,R0,#10
+	STR R0,[R6]
+	
+	
+	; DRAW BLACK
+	
+	LDR R0, [R6]
+	MOV R1,#30
+	LDR R10, =BLACK
+	BL DRAW_OBSTACLES
+	
+	
+	LDR R8,=30
+	LDR R10,=40
+	;LDR R8,[R7] ;R8 IS X OF DWARF
+	ADD R7,R7,#2
+	LDR R9,[R7] ; R9 IS Y OF DWARF
+	CMP R0,R8 ;REPLACE 25 BY X OF DWARF
+	BLO heretwoD
+	CMP R0,R10 ;REPLACE 25 BY X OF DWARF
+	BGT heretwoD
+	BL CHECK_Y
+	
+heretwoD
+
+
+
+
+
+	ADD R6,R6,#2
+	
+	; UPDATE COORDINATES3
+	LDR R0,[R6]
+	SUB R0,R0,#10
+	STR R0,[R6]
+	
+	
+	; DRAW BLACK
+	
+	LDR R0, [R6]
+	MOV R1,#20
+	LDR R10, =BLACK
+	BL DRAW_OBSTACLES
+	
+	
+	LDR R8,=30
+	LDR R10,=40
+	;LDR R8,[R7] ;R8 IS X OF DWARF
+	;ADD R7,R7,#2
+	;LDR R9,[R7] ; R9 IS Y OF DWARF
+	ADD R12,R12,#2
+	LDR R11,[R12] ; R11 IS Y OF OBSTACLE
+	CMP R0,R8 ;REPLACE 25 BY X OF DWARF
+	BLO herethreeD
+	CMP R0,R10 ;REPLACE 25 BY X OF DWARF
+	BGT herethreeD
+	BL CHECK_Y
+	
+herethreeD
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	BL delay_50_milli_second
+	POP {R0-R12, PC}
+
+MAIN_DWARF FUNCTION
+	PUSH{R0-R12,LR}
+	BL DRAW_BACKGROUND_DWARF
+	BL DRAW_SCORE_DWARF
+	LDR R0,=23
+	LDR R1,=234
+	BL DRAW_DWARF
+	LDR r0,=100
+	LDR r1,=15
+	LDR R10, =BLACK
+	BL DRAW_OBSTACLES
+	LDR r0,=210
+	LDR r1,=30
+	LDR R10, =BLACK
+	BL DRAW_OBSTACLES
+	LDR r0,=310
+	LDR r1,=20
+	LDR R10, =BLACK
+	BL DRAW_OBSTACLES
+
+	BL delay_1_second
+WAIT_FOR_JUMP
+	LDR R9, =GPIOC_IDR
+	LDR R10, [R9]
+	LSR R10,#0X0D
+	AND R10,#0X01
+	LDR R11, =0X000
+	CMP R11,R10
+	BNE SKIP_JUMP
+	BL JUMP_DWARF
+	BL delay_10_milli_second
+	LDR R9, =GPIOC_IDR
+	LDR R10, [R9]
+	LSR R10,#0X0D
+	AND R10,#0X01
+	LDR R11, =0X0000
+	CMP R11,R10
+	BEQ NIGHT
+	BL FALL_DWARF
+	BL MORNING
+SKIP_JUMP
+	BL WAIT_FOR_JUMP
+MORNING
+	LDR R5,=DWARF_LOCATION
+	LDR R0,=23
+	STRH R0,[R5]
+	ADD R5,R5,#2
+	LDR R1,=234
+	STRH R1,[R5]
+	BL DRAW_DWARF
+	BL WAIT_FOR_JUMP
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;NIGHT
+NIGHT
+	LDR R5,=300
+	LDR R9,=110
+	LDR R4,=BULLET_LOCATIONS
+	ldr r7,=BULLET_Y_LOCATIONS
+	LDR R8,=0
+INIT_B_NIGHT
+	STRH R5,[R4]
+	STRH R9,[R7]
+	MOV R0,R5
+	MOV R1,R9
+	LDR R10,=YELLOW
+	BL DRAW_BULLET
+	ADD R4,R4,#2
+	ADD R7,R7,#2
+	ADD R8,R8,#2
+	SUB R5,R5,#70
+	SUB R9,R9,#5
+	CMP R8,#8
+	BNE INIT_B_NIGHT
+	LDR R5,=DWARF_LOCATION
+	LDR R0,=23
+	STRH R0,[R5]
+	ADD R5,R5,#2
+	LDR R1,=112
+	STRH R1,[R5]
+	BL DRAW_DWARF
+
+WAIT_FOR_JUMP_NIGHT
+	LDR R9, =GPIOC_IDR
+	LDR R10, [R9]
+	LSR R10,#0X0D
+	AND R10,#0X01
+	LDR R11, =0X0000000
+	CMP R11,R10
+	BNE SKIP_JUMP_NIGHT
+	BL JUMP_DWARF_NIGHT
+	BL delay_10_milli_second
+	LDR R9, =GPIOC_IDR
+	LDR R10, [R9]
+	LSR R10,#0X0D
+	AND R10,#0X01
+	LDR R11, =0X0
+	CMP R11,R10
+	BEQ MORNING
+	BL FALL_DWARF_NIGHT
+SKIP_JUMP_NIGHT
+	BL UPDATE_BULLETS_DELAYED
+	BL MOVE_DWARF_NIGHT
+	BL WAIT_FOR_JUMP_NIGHT
+enddwarf
+	POP{R0-R12,PC}
+	ENDFUNC
+	END

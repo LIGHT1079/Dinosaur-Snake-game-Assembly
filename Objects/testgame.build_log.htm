@@ -1,0 +1,160 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.38.0.0
+Copyright (C) 2022 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: dsfaffafa afaf, fagrdh, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.38.0.0
+Toolchain Path:  J:\IDEs\Keil\ARM\ARMCLANG\Bin
+C Compiler:      ArmClang.exe V6.19
+Assembler:       Armasm.exe V6.19
+Linker/Locator:  ArmLink.exe V6.19
+Library Manager: ArmAr.exe V6.19
+Hex Converter:   FromElf.exe V6.19
+CPU DLL:         SARMCM3.DLL V5.38.0.0
+Dialog DLL:      DCM.DLL V1.17.5.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.1.0.0
+Dialog DLL:      TCM.DLL V1.56.4.0
+ 
+<h2>Project:</h2>
+J:\Uni_Labs\ASM\ArmLab\testgame.uvprojx
+Project File Date:  12/13/2023
+
+<h2>Output:</h2>
+*** Using Compiler 'V6.19', folder: 'J:\IDEs\Keil\ARM\ARMCLANG\Bin'
+Rebuild target 'Target 1'
+snakegame.c(1): error: unknown type name 'AREA'
+        AREA MYDATA, DATA, READONLY
+        ^
+snakegame.c(1): error: expected ';' after top level declarator
+        AREA MYDATA, DATA, READONLY
+                                   ^
+                                   ;
+snakegame.c(4): error: unknown type name 'this'
+RCC_AHB1ENR EQU 0x40021018 ;this register is responsible for enabling certain ports, by making the clock affect the target port.
+                            ^
+snakegame.c(4): error: illegal storage class on file-scoped variable
+RCC_AHB1ENR EQU 0x40021018 ;this register is responsible for enabling certain ports, by making the clock affect the target port.
+                                          ^
+snakegame.c(4): error: expected ';' after top level declarator
+RCC_AHB1ENR EQU 0x40021018 ;this register is responsible for enabling certain ports, by making the clock affect the target port.
+                                            ^
+                                            ;
+snakegame.c(6): error: unknown type name 'Base'
+GPIOA_BASE EQU 0x40010800       ;Base of port E
+                                 ^
+snakegame.c(6): error: expected ';' after top level declarator
+GPIOA_BASE EQU 0x40010800       ;Base of port E
+                                        ^
+                                        ;
+snakegame.c(7): error: unknown type name 'this'
+;this is where you write your data as an output into the port
+ ^
+snakegame.c(7): error: expected ';' after top level declarator
+;this is where you write your data as an output into the port
+        ^
+        ;
+snakegame.c(8): error: unknown type name 'output'
+GPIOA_ODR EQU 0x4001080C    ;output register of port E, PE0 - PE15
+                             ^
+snakegame.c(8): error: illegal storage class on file-scoped variable
+GPIOA_ODR EQU 0x4001080C    ;output register of port E, PE0 - PE15
+                                             ^
+snakegame.c(8): error: expected ';' after top level declarator
+GPIOA_ODR EQU 0x4001080C    ;output register of port E, PE0 - PE15
+                                               ^
+                                               ;
+snakegame.c(9): error: unknown type name 'as'
+        ;as output
+         ^
+snakegame.c(9): error: expected ';' after top level declarator
+        ;as output
+                  ^
+                  ;
+snakegame.c(10): error: unknown type name 'Base'
+GPIOB_BASE EQU 0x40010C04       ;Base of port E
+                                 ^
+snakegame.c(10): error: expected ';' after top level declarator
+GPIOB_BASE EQU 0x40010C04       ;Base of port E
+                                        ^
+                                        ;
+snakegame.c(11): error: unknown type name 'this'
+;this is where you write your data as an output into the port
+ ^
+snakegame.c(11): error: expected ';' after top level declarator
+;this is where you write your data as an output into the port
+        ^
+        ;
+snakegame.c(15): warning: type specifier missing, defaults to 'int' [-Wimplicit-int]
+;odr = base+0x0C
+ ^
+ int
+snakegame.c(15): error: use of undeclared identifier 'base'
+;odr = base+0x0C
+       ^
+snakegame.c(15): warning: no previous extern declaration for non-static variable 'odr' [-Wmissing-variable-declarations]
+;odr = base+0x0C
+ ^
+note: declare 'static' if the variable is not intended to be used outside of this translation unit
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+2 warnings and 20 errors generated.
+compiling snakegame.c...
+assembling startup_stm32f10x_md.s...
+RTE/Device/STM32F103C8/system_stm32f10x.c(64): warning: In file included from...
+J:/IDEs/Keil/Keil/STM32F1xx_DFP/2.4.1/Device/Include\stm32f10x.h(18): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *              - To use or not the peripheral<92>s drivers in application code(i.e. 
+                                               ^
+J:/IDEs/Keil/Keil/STM32F1xx_DFP/2.4.1/Device/Include\stm32f10x.h(19): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *                code will be based on direct access to peripheral<92>s registers 
+                                                                    ^
+J:/IDEs/Keil/Keil/STM32F1xx_DFP/2.4.1/Device/Include\stm32f10x.h(26): warning: invalid UTF-8 in comment [-Winvalid-utf8]
+  *           - Macros to access peripheral<92>s registers hardware
+                                           ^
+RTE/Device/STM32F103C8/system_stm32f10x.c(166): warning: no previous extern declaration for non-static variable 'AHBPrescTable' [-Wmissing-variable-declarations]
+__I uint8_t AHBPrescTable[16] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 6, 7, 8, 9};
+            ^
+RTE/Device/STM32F103C8/system_stm32f10x.c(166): note: declare 'static' if the variable is not intended to be used outside of this translation unit
+__I uint8_t AHBPrescTable[16] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 6, 7, 8, 9};
+    ^
+4 warnings generated.
+compiling system_stm32f10x.c...
+".\Objects\testgame.axf" - 19 Error(s), 6 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.9.0.pack
+                ARM.CMSIS.5.9.0
+                CMSIS (Common Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.6.0
+
+Package Vendor: Keil
+                https://www.keil.com/pack/Keil.STM32F1xx_DFP.2.4.1.pack
+                Keil.STM32F1xx_DFP.2.4.1
+                STMicroelectronics STM32F1 Series Device Support, Drivers and Examples
+   * Component: Startup Version: 1.0.0
+
+<h2>Collection of Component include folders:</h2>
+  ./RTE/Device/STM32F103C8
+  ./RTE/_Target_1
+  J:/IDEs/Keil/ARM/CMSIS/5.9.0/CMSIS/Core/Include
+  J:/IDEs/Keil/Keil/STM32F1xx_DFP/2.4.1/Device/Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:5.6.0
+
+   * Component: Keil::Device:Startup:1.0.0
+      Source file:   Device/Source/ARM/startup_stm32f10x_md.s
+      Include file:  RTE_Driver/Config/RTE_Device.h
+      Source file:   Device/Source/ARM/STM32F1xx_OPT.s
+      Source file:   Device/Source/system_stm32f10x.c
+Target not created.
+Build Time Elapsed:  00:00:00
+</pre>
+</body>
+</html>

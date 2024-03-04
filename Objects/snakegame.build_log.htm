@@ -1,0 +1,112 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.38.0.0
+Copyright (C) 2022 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Farouq Diaa Eldin, CUFE, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.38.0.0
+Toolchain Path:  G:\ARM\ARM\ARMCLANG\Bin
+C Compiler:      ArmClang.exe V6.19
+Assembler:       Armasm.exe V6.19
+Linker/Locator:  ArmLink.exe V6.19
+Library Manager: ArmAr.exe V6.19
+Hex Converter:   FromElf.exe V6.19
+CPU DLL:         SARMCM3.DLL V5.38.0.0
+Dialog DLL:      DCM.DLL V1.17.5.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.1.0.0
+Dialog DLL:      TCM.DLL V1.56.4.0
+ 
+<h2>Project:</h2>
+G:\Micro\1- Project\ArmLab\testgame.uvprojx
+Project File Date:  12/25/2023
+
+<h2>Output:</h2>
+*** Using Compiler 'V6.19', folder: 'G:\ARM\ARM\ARMCLANG\Bin'
+Build target 'Target 1'
+"Definitions.s", line 70: Warning: A1581W: Added 2 bytes of padding at address 0x8e
+    included by GET/INCLUDE directive from "snakegame.s", line 1
+    included by GET/INCLUDE directive from "dwarfgame.s", line 1
+   70 00000090 APPLE_X DCD 0
+"snakegame.s", line 3: Warning: A1581W: Added 2 bytes of padding at address 0x36a
+    included by GET/INCLUDE directive from "dwarfgame.s", line 1
+    3 0000036c  AREA snake, CODE, READONLY
+"snakegame.s", line 456: Warning: A1471W: Directive LTORG may be in an executable position
+    included by GET/INCLUDE directive from "dwarfgame.s", line 1
+  456 00000624  LTORG
+"snakegame.s", line 811: Warning: A1581W: Added 2 bytes of padding at address 0xa7e
+    included by GET/INCLUDE directive from "dwarfgame.s", line 1
+  811 00000a80  LTORG
+"snakegame.s", line 954: Warning: A1581W: Added 2 bytes of padding at address 0xc46
+    included by GET/INCLUDE directive from "dwarfgame.s", line 1
+  954 00000c48  LTORG
+"snakegame.s", line 1086: Warning: A1581W: Added 2 bytes of padding at address 0xd62
+    included by GET/INCLUDE directive from "dwarfgame.s", line 1
+ 1086 00000d64  LTORG
+"dwarfgame.s", line 3: Warning: A1581W: Added 2 bytes of padding at address 0x10fa
+    3 000010fc  AREA dwarf, CODE, READONLY
+"dwarfgame.s", line 222: Warning: A1471W: Directive LTORG may be in an executable position
+  222 00000290  LTORG
+"dwarfgame.s", line 235: Warning: A1471W: Directive LTORG may be in an executable position
+  235 000002aa  LTORG
+"dwarfgame.s", line 235: Warning: A1581W: Added 2 bytes of padding at address 0x2aa
+  235 000002ac  LTORG
+"dwarfgame.s", line 561: Warning: A1471W: Directive LTORG may be in an executable position
+  561 00000602  LTORG
+"dwarfgame.s", line 561: Warning: A1581W: Added 2 bytes of padding at address 0x602
+  561 00000604  LTORG
+"dwarfgame.s", line 574: Warning: A1471W: Directive LTORG may be in an executable position
+  574 0000061e  LTORG
+"dwarfgame.s", line 574: Warning: A1581W: Added 2 bytes of padding at address 0x61e
+  574 00000620  LTORG
+"dwarfgame.s", line 805: Warning: A1471W: Directive LTORG may be in an executable position
+  805 0000087c  LTORG
+"dwarfgame.s", line 818: Warning: A1471W: Directive LTORG may be in an executable position
+  818 000008a0  LTORG
+"dwarfgame.s", line 885: Warning: A1471W: Directive LTORG may be in an executable position
+  885 0000095a  LTORG
+"dwarfgame.s", line 885: Warning: A1581W: Added 2 bytes of padding at address 0x95a
+  885 0000095c  LTORG
+0 Errors, 18 Warnings
+assembling dwarfgame.s...
+linking...
+Program Size: Code=12508 RO-data=236 RW-data=220 ZI-data=1536  
+FromELF: creating hex file...
+".\Objects\snakegame.axf" - 0 Error(s), 0 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: ARM
+                http://www.keil.com/pack/ARM.CMSIS.5.9.0.pack
+                ARM.CMSIS.5.9.0
+                CMSIS (Common Microcontroller Software Interface Standard)
+   * Component: CORE Version: 5.6.0
+
+Package Vendor: Keil
+                https://www.keil.com/pack/Keil.STM32F1xx_DFP.2.4.1.pack
+                Keil.STM32F1xx_DFP.2.4.1
+                STMicroelectronics STM32F1 Series Device Support, Drivers and Examples
+   * Component: Startup Version: 1.0.0
+
+<h2>Collection of Component include folders:</h2>
+  ./RTE/Device/STM32F103C8
+  ./RTE/_Target_1
+  G:/ARM/Packs/ARM/CMSIS/5.9.0/CMSIS/Core/Include
+  G:/ARM/Packs/Keil/STM32F1xx_DFP/2.4.1/Device/Include
+
+<h2>Collection of Component Files used:</h2>
+
+   * Component: ARM::CMSIS:CORE:5.6.0
+
+   * Component: Keil::Device:Startup:1.0.0
+      Source file:   Device/Source/ARM/startup_stm32f10x_md.s
+      Source file:   Device/Source/system_stm32f10x.c
+      Source file:   Device/Source/ARM/STM32F1xx_OPT.s
+      Include file:  RTE_Driver/Config/RTE_Device.h
+Build Time Elapsed:  00:00:05
+</pre>
+</body>
+</html>
